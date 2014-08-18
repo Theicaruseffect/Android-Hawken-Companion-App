@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Android-Hawken-Companion-App.iml" filepath="$PROJECT_DIR$/Android-Hawken-Companion-App.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Android-Hawken-Companion-App.iml" filepath="$PROJECT_DIR$/Android-Hawken-Companion-App.iml" />
       <module fileurl="file://$PROJECT_DIR$/HawkenCompanionApp.iml" filepath="$PROJECT_DIR$/HawkenCompanionApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

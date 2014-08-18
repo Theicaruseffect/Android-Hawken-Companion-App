@@ -22,14 +22,18 @@ package android.hawkencompanionapp.fragments;
 import android.graphics.Color;
 import android.hawkencompanionapp.R;
 import android.hawkencompanionapp.asynctasks.AsyncTaskUpdate;
+import android.hawkencompanionapp.logger.Logger;
 import android.hawkencompanionapp.tabs.HeavyMechsGuideTab;
 import android.hawkencompanionapp.tabs.LightMechsGuideTab;
 import android.hawkencompanionapp.tabs.MediumMechsGuideTab;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.view.View;
 import android.widget.TabHost;
 import android.widget.TextView;
+
+import java.lang.reflect.Field;
 
 /**
  * Created by Phillip Adam Nash on 14/08/2014.
@@ -101,5 +105,20 @@ public class MechGuideFragment extends BaseFragment implements AsyncTaskUpdate, 
     @Override
     public void onTabChanged(String id) {
         String selected = "";
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        try {
+            final Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+        } catch (NoSuchFieldException e) {
+            Logger.error(this,e.getMessage());
+        } catch (IllegalAccessException e) {
+            Logger.error(this,e.getMessage());
+        }
     }
 }
