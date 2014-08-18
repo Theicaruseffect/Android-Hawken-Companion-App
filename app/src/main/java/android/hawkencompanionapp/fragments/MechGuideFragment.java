@@ -19,8 +19,7 @@
 
 package android.hawkencompanionapp.fragments;
 
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
+import android.graphics.Color;
 import android.hawkencompanionapp.R;
 import android.hawkencompanionapp.asynctasks.AsyncTaskUpdate;
 import android.hawkencompanionapp.tabs.HeavyMechsGuideTab;
@@ -29,13 +28,17 @@ import android.hawkencompanionapp.tabs.MediumMechsGuideTab;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.view.View;
+import android.widget.TabHost;
+import android.widget.TextView;
 
 /**
  * Created by Phillip Adam Nash on 14/08/2014.
  */
-public class MechGuideFragment extends BaseFragment implements AsyncTaskUpdate,
-        ActionBar.TabListener, OnFragmentInflated {
+public class MechGuideFragment extends BaseFragment implements AsyncTaskUpdate, OnFragmentInflated, TabHost.OnTabChangeListener {
     private FragmentTabHost mTabHost;
+    private final String TAB_SPEC_MECH_LIGHT = "light";
+    private final String TAB_SPEC_MECH_MEDIUM = "medium";
+    private final String TAB_SPEC_MECH_HEAVY = "heavy";
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -65,19 +68,28 @@ public class MechGuideFragment extends BaseFragment implements AsyncTaskUpdate,
 
     private void createFragmentTabs(View v) {
         mTabHost = (FragmentTabHost) v.findViewById(R.id.tabhost);
-        mTabHost.setup(getActivity(),getChildFragmentManager(),R.id.tabFrameLayout);
+        mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.tabFrameLayout);
         mTabHost.addTab(
-                mTabHost.newTabSpec("light").setIndicator("Light",
+                mTabHost.newTabSpec(TAB_SPEC_MECH_LIGHT).setIndicator(getString(R.string.mech_tab_light),
                         getResources().getDrawable(android.R.drawable.star_on)),
                 LightMechsGuideTab.class, null);
         mTabHost.addTab(
-                mTabHost.newTabSpec("medium").setIndicator("Medium",
+                mTabHost.newTabSpec(TAB_SPEC_MECH_MEDIUM).setIndicator(getString(R.string.mech_tab_medium),
                         getResources().getDrawable(android.R.drawable.star_on)),
                 MediumMechsGuideTab.class, null);
         mTabHost.addTab(
-                mTabHost.newTabSpec("heavy").setIndicator("Heavy",
+                mTabHost.newTabSpec(TAB_SPEC_MECH_HEAVY).setIndicator(getString(R.string.mech_tab_heavy),
                         getResources().getDrawable(android.R.drawable.star_on)),
                 HeavyMechsGuideTab.class, null);
+        mTabHost.setOnTabChangedListener(this);
+
+        //Set the text with each tab to white.
+        for(int i=0; i < mTabHost.getTabWidget().getChildCount(); i++)
+        {
+            TextView tv = (TextView)
+                    mTabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+            tv.setTextColor(Color.WHITE);
+        }
     }
 
     @Override
@@ -86,19 +98,8 @@ public class MechGuideFragment extends BaseFragment implements AsyncTaskUpdate,
         mTabHost = null;
     }
 
-
     @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
+    public void onTabChanged(String id) {
+        String selected = "";
     }
 }
