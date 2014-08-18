@@ -1,28 +1,41 @@
+/*
+ * Copyright (c) 2014 "Hawken Companion App"
+ *
+ * This file is part of Hawken Companion App.
+ *
+ * Hawken Companion App is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses.
+ */
+
 package android.hawkencompanionapp.fragments;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.hawkencompanionapp.R;
-import android.hawkencompanionapp.activities.BaseActivity;
 import android.hawkencompanionapp.asynctasks.AsyncTaskUpdate;
-import android.hawkencompanionapp.tabs.TabsAdapter;
+import android.hawkencompanionapp.tabs.HeavyMechsGuideTab;
+import android.hawkencompanionapp.tabs.LightMechsGuideTab;
+import android.hawkencompanionapp.tabs.MediumMechsGuideTab;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v4.app.FragmentManager;
-import android.view.LayoutInflater;
+import android.support.v4.app.FragmentTabHost;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 /**
  * Created by Phillip Adam Nash on 14/08/2014.
  */
 public class MechGuideFragment extends BaseFragment implements AsyncTaskUpdate,
         ActionBar.TabListener, OnFragmentInflated {
-    private ViewPager mViewPager;
-    private TabsAdapter mTabsAdapter;
+    private FragmentTabHost mTabHost;
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -47,22 +60,32 @@ public class MechGuideFragment extends BaseFragment implements AsyncTaskUpdate,
 
     @Override
     public void onFragmentInflated(View v) {
-        String[] tabs = { "Top Rated", "Games", "Movies" };
-        mViewPager = (ViewPager)v.findViewById(R.id.mech_guide_view_pager);
-        ActionBar actionBar = getActivity().getActionBar();
-        mTabsAdapter = new TabsAdapter(getActivity().getSupportFragmentManager());
-        mViewPager.setAdapter(mTabsAdapter);
-
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-        if (actionBar.getTabCount() == 0) {
-            // Adding Tabs
-            for (String tab_name : tabs) {
-                actionBar.addTab(actionBar.newTab().setText(tab_name)
-                        .setTabListener(this));
-            }
-        }
+        createFragmentTabs(v);
     }
+
+    private void createFragmentTabs(View v) {
+        mTabHost = (FragmentTabHost) v.findViewById(R.id.tabhost);
+        mTabHost.setup(getActivity(),getChildFragmentManager(),R.id.tabFrameLayout);
+        mTabHost.addTab(
+                mTabHost.newTabSpec("light").setIndicator("Light",
+                        getResources().getDrawable(android.R.drawable.star_on)),
+                LightMechsGuideTab.class, null);
+        mTabHost.addTab(
+                mTabHost.newTabSpec("medium").setIndicator("Medium",
+                        getResources().getDrawable(android.R.drawable.star_on)),
+                MediumMechsGuideTab.class, null);
+        mTabHost.addTab(
+                mTabHost.newTabSpec("heavy").setIndicator("Heavy",
+                        getResources().getDrawable(android.R.drawable.star_on)),
+                HeavyMechsGuideTab.class, null);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mTabHost = null;
+    }
+
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {

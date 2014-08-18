@@ -1,12 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:id="@+id/mech_guide_fragment">
+<!--
+  ~ Copyright (c) 2014 "Hawken Companion App"
+  ~
+  ~ This file is part of Hawken Companion App.
+  ~
+  ~ Hawken Companion App is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses.
+  -->
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/mech_guide_view_pager"
+<android.support.v4.app.FragmentTabHost
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tabhost"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/dark_grey"/>
-</RelativeLayout>
+        android:orientation="vertical" >
+
+        <TabWidget
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal"/>
+
+        <FrameLayout
+            android:id="@+id/tabFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</android.support.v4.app.FragmentTabHost>
