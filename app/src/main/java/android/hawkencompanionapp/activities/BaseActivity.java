@@ -19,6 +19,7 @@ package android.hawkencompanionapp.activities;
  */
 
 import android.app.Activity;
+import android.support.v4.app.*;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.hawkencompanionapp.R;
@@ -35,7 +36,7 @@ import android.widget.Toast;
  * Common functionalities between all of the activities should be
  * added here.
  */
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends FragmentActivity {
 
     private ProgressDialog mProgressDialog;
 

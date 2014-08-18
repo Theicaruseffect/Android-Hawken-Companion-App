@@ -9,6 +9,7 @@ import android.hawkencompanionapp.logger.Logger;
 import android.hawkencompanionapp.models.UserLoginSession;
 import android.hawkencompanionapp.models.UserProfile;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 /**

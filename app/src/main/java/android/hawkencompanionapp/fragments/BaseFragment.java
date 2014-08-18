@@ -18,7 +18,10 @@ package android.hawkencompanionapp.fragments;
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import android.app.Fragment;
+import android.app.ActionBar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
 import android.hawkencompanionapp.activities.UserAccountMainActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,25 +31,44 @@ import android.view.ViewGroup;
 /**
  * Created by Phillip Adam Nash on 14/08/2014.
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends android.support.v4.app.Fragment {
+
+    private OnFragmentInflated mOnFragmentInflated;
 
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         final Bundle bundle = getArguments();
+        final ActionBar actionBar = getActivity().getActionBar();
 
         if (bundle != null) {
             final String fragmentTitle =
                     bundle.getString(UserAccountMainActivity.FRAGMENT_TITLE_BUNDLE_KEY);
             if (fragmentTitle != null) {
-                getActivity().getActionBar().setTitle(fragmentTitle);
+                actionBar.setTitle(fragmentTitle);
+            }
+        }
+
+        if (!(this instanceof MechGuideFragment)) {
+            if (actionBar != null) {
+                actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
             }
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle args) {
-        return inflater.inflate(getFragmentLayoutId(), container, false);
+        final View view = inflater.inflate(getFragmentLayoutId(), container, false);
+
+        if (mOnFragmentInflated != null) {
+            mOnFragmentInflated.onFragmentInflated(view);
+        }
+
+        return view;
+    }
+
+    protected void setOnFragmentInflated(OnFragmentInflated onFragmentInflated) {
+        this.mOnFragmentInflated = onFragmentInflated;
     }
 
     protected abstract int getFragmentLayoutId();

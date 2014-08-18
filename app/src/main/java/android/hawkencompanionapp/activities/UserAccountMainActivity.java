@@ -17,24 +17,19 @@ package android.hawkencompanionapp.activities;
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.hawkencompanionapp.R;
 import android.hawkencompanionapp.adapters.NavBarExpandableListAdapter;
-import android.hawkencompanionapp.fragments.BaseFragment;
-import android.hawkencompanionapp.fragments.MechGuideFragment;
-import android.hawkencompanionapp.fragments.UserAccountFragment;
-import android.hawkencompanionapp.fragments.WelcomeUserFragment;
+import android.hawkencompanionapp.fragments.*;
 import android.hawkencompanionapp.models.NavBarCategory;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -92,13 +87,13 @@ public class UserAccountMainActivity extends BaseActivity implements OnChildClic
     }
 
     private void swapCurrentFragment(Fragment currentFragment, Bundle bundle) {
-        final FragmentManager fragmentManager = getFragmentManager();
+        final FragmentManager fm = getSupportFragmentManager();
 
         if (bundle != null && currentFragment.getArguments() == null) {
             currentFragment.setArguments(bundle);
         }
 
-        final FragmentTransaction transaction = fragmentManager.beginTransaction();
+        final FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.content_frame, currentFragment);
         transaction.commit();
     }

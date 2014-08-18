@@ -2,6 +2,8 @@ package android.hawkencompanionapp.fragments;
 
 import android.hawkencompanionapp.R;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 /**
  * Created by Phillip Adam Nash on 16/08/2014.
