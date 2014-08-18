@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 /**
- * Created by Icarus on 14/08/2014.
+ * Created by Phillip Adam Nash on 14/08/2014.
  */
 public class UserAccountFragment extends BaseFragment implements AsyncTaskUpdate {
 

@@ -1,7 +1,7 @@
 package android.hawkencompanionapp.models;
 
 /**
- * Created by Icarus on 14/08/2014.
+ * Created by Phillip Adam Nash on 14/08/2014.
  */
 public final class UserForgottenPassword {
     private final String mEmailAddress;

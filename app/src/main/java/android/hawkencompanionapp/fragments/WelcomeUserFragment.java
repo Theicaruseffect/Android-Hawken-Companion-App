@@ -4,7 +4,7 @@ import android.hawkencompanionapp.R;
 import android.os.Bundle;
 
 /**
- * Created by Icarus on 16/08/2014.
+ * Created by Phillip Adam Nash on 16/08/2014.
  *
  * This fragment simply displays a welcome screen (default screen upon logging in) to the user.
  */
