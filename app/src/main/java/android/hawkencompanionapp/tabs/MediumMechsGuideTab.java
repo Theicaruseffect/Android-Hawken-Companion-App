@@ -19,26 +19,13 @@
 
 package android.hawkencompanionapp.tabs;
 
-import android.hawkencompanionapp.R;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 /**
  * Created by Phillip Adam Nash on 18/08/2014.
  */
-public class MediumMechsGuideTab extends Fragment {
+
+public class MediumMechsGuideTab extends BaseMechTab {
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View rootView = inflater.inflate(R.layout.mech_guide_tab, container, false);
-
-        TextView tv = (TextView) rootView.findViewById(R.id.text);
-        tv.setText("Medium");
-        return rootView;
+    protected String getUrlOfMechType() {
+        return "http://www.playhawken.com/game-guide/mechs/medium-mechs";
     }
 }

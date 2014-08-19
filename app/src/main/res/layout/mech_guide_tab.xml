@@ -28,7 +28,14 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/text"
+        android:id="@+id/mech_type_txt_view"
+        android:layout_gravity="center"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mech_description_txt_view"
         android:textColor="@color/white"/>
 
 </LinearLayout>

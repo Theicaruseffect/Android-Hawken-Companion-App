@@ -19,25 +19,14 @@
 
 package android.hawkencompanionapp.tabs;
 
-import android.hawkencompanionapp.R;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 /**
  * Created by Phillip Adam Nash on 2014.
  */
-public class HeavyMechsGuideTab extends Fragment {
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+public class HeavyMechsGuideTab extends BaseMechTab {
 
-        View rootView = inflater.inflate(R.layout.mech_guide_tab, container, false);
-        TextView tv = (TextView) rootView.findViewById(R.id.text);
-        tv.setText("Heavy");
-        return rootView;
+    @Override
+    protected String getUrlOfMechType() {
+        return "http://www.playhawken.com/game-guide/mechs/heavy-mechs";
     }
 }

@@ -23,4 +23,85 @@ package android.hawkencompanionapp.models;
  * Created by Phillip Adam Nash on 2014.
  */
 public class Mech {
+    private String mMechName;
+    private String mMechDescription;
+    private String mMechUrl;
+    private String mMechImgUrl;
+    private String mMechPrimaryWeaponName;
+    private String mMechPrimaryWeaponImgName;
+    private String mMechSecondaryWeaponName;
+    private String mMechSecondaryWeaponImgUrl;
+    private String mMechAbility;
+
+    public String getMechImgUrl() {
+        return mMechImgUrl;
+    }
+
+    public void setMechImgUrl(String mechImgUrl) {
+        this.mMechImgUrl = mechImgUrl;
+    }
+
+    public String getMechName() {
+        return mMechName;
+    }
+
+    public void setMechName(String mechName) {
+        this.mMechName = mechName;
+    }
+
+    public String getMechDescription() {
+        return mMechDescription;
+    }
+
+    public void setMechDescription(String mechDescription) {
+        this.mMechDescription = mechDescription;
+    }
+
+    public String getMechUrl() {
+        return mMechUrl;
+    }
+
+    public void setMechUrl(String mechUrl) {
+        this.mMechUrl = mechUrl;
+    }
+
+    public String getMechPrimaryWeaponName() {
+        return mMechPrimaryWeaponName;
+    }
+
+    public void setMechPrimaryWeaponName(String mechPrimaryWeaponName) {
+        this.mMechPrimaryWeaponName = mechPrimaryWeaponName;
+    }
+
+    public String getMechPrimaryWeaponImgName() {
+        return mMechPrimaryWeaponImgName;
+    }
+
+    public void setMechPrimaryWeaponImgName(String mechPrimaryWeaponImgName) {
+        this.mMechPrimaryWeaponImgName = mechPrimaryWeaponImgName;
+    }
+
+    public String getMechSecondaryWeaponName() {
+        return mMechSecondaryWeaponName;
+    }
+
+    public void setMechSecondaryWeaponName(String mechSecondaryWeaponName) {
+        this.mMechSecondaryWeaponName = mechSecondaryWeaponName;
+    }
+
+    public String getMechSecondaryWeaponImgUrl() {
+        return mMechSecondaryWeaponImgUrl;
+    }
+
+    public void setMechSecondaryWeaponImgUrl(String mechSecondaryWeaponImgUrl) {
+        this.mMechSecondaryWeaponImgUrl = mechSecondaryWeaponImgUrl;
+    }
+
+    public String getMechSpecialAbility() {
+        return mMechAbility;
+    }
+
+    public void setMechAbility(String mechAbility) {
+        this.mMechAbility = mechAbility;
+    }
 }

@@ -35,14 +35,14 @@ import java.io.IOException;
  */
 public class LoadMechInfoTask extends AsyncTask<Void, Void, Void> {
 
-    private final String mMechLightUrl;
     private AsyncTaskUpdate mAsyncTaskUpdate;
+    private String mUrl;
     private final MechType mMechType;
 
-    public LoadMechInfoTask(AsyncTaskUpdate asyncTaskUpdate, String url, MechType mechType) {
-        mMechLightUrl = url;
+    public LoadMechInfoTask(AsyncTaskUpdate asyncTaskUpdate, MechType mechType, String url) {
         mAsyncTaskUpdate = asyncTaskUpdate;
         mMechType = mechType;
+        mUrl = url;
     }
 
     @Override
@@ -56,9 +56,8 @@ public class LoadMechInfoTask extends AsyncTask<Void, Void, Void> {
     }
 
     protected Void doInBackground(Void... v) {
-        final HttpPost httpPost = new HttpPost(mMechLightUrl);
+        final HttpPost httpPost = new HttpPost(mUrl);
         final HttpClient httpClient = new DefaultHttpClient();
-        Logger.debug(this, "Obtaining mech details");
         try {
             final HttpResponse httpResponse = httpClient.execute(httpPost);
             final String responseStr = EntityUtils.toString(httpResponse.getEntity());
