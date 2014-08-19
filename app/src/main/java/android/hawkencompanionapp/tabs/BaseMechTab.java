@@ -68,7 +68,7 @@ public abstract class BaseMechTab extends Fragment implements AsyncTaskUpdate {
     @Override
     public void onAsyncPostComplete() {
         Logger.debug(this, "Finished obtaining mech details");
-        Logger.debug(this, mMechType.getMechDescription());
+        setMechTitleAndDescription();
     }
 
     private void setMechTitleAndDescription() {

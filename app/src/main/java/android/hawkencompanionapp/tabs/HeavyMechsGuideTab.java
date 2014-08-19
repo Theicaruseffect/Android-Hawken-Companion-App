@@ -20,6 +20,8 @@
 package android.hawkencompanionapp.tabs;
 
 
+import android.os.Bundle;
+
 /**
  * Created by Phillip Adam Nash on 2014.
  */
@@ -28,5 +30,10 @@ public class HeavyMechsGuideTab extends BaseMechTab {
     @Override
     protected String getUrlOfMechType() {
         return "http://www.playhawken.com/game-guide/mechs/heavy-mechs";
+    }
+
+    @Override
+    public void onCreate(Bundle savedBundle) {
+        super.onCreate(savedBundle);
     }
 }
