@@ -17,7 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses.
  */
 package android.hawkencompanionapp.tabs;
+
 import android.hawkencompanionapp.R;
+import android.hawkencompanionapp.asynctasks.AsyncTaskUpdate;
+import android.hawkencompanionapp.asynctasks.LoadMechInfoTask;
+import android.hawkencompanionapp.logger.Logger;
+import android.hawkencompanionapp.models.MechType;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -28,7 +33,10 @@ import android.widget.TextView;
 /**
  * Created by Phillip Adam Nash on 2014.
  */
-public class LightMechsGuideTab extends Fragment {
+public class LightMechsGuideTab extends Fragment implements AsyncTaskUpdate {
+    private MechType mMechType;
+    private String mUrl = "http://www.playhawken.com/game-guide/mechs/light-mechs";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,5 +45,22 @@ public class LightMechsGuideTab extends Fragment {
         TextView tv = (TextView) rootView.findViewById(R.id.text);
         tv.setText("Light");
         return rootView;
+    }
+
+    @Override
+    public void onCreate(Bundle savedBundle) {
+        super.onCreate(savedBundle);
+        mMechType = new MechType();
+        new LoadMechInfoTask(this,mUrl,mMechType).execute();
+    }
+
+    @Override
+    public void onAsyncPreComplete() {
+        Logger.debug(this, "Obtaining mech details");
+    }
+
+    @Override
+    public void onAsyncPostComplete() {
+        Logger.debug(this, "Finished obtaining mech details");
     }
 }
