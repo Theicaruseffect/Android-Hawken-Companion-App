@@ -29,6 +29,7 @@ import android.hawkencompanionapp.tabs.MediumMechsGuideTab;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -38,11 +39,14 @@ import java.lang.reflect.Field;
 /**
  * Created by Phillip Adam Nash on 14/08/2014.
  */
-public class MechGuideFragment extends BaseFragment implements AsyncTaskUpdate, OnFragmentInflated, TabHost.OnTabChangeListener {
+public class MechGuideFragment extends BaseFragment implements AsyncTaskUpdate, OnFragmentInflated, TabHost.OnTabChangeListener,
+        View.OnTouchListener {
     private FragmentTabHost mTabHost;
     private final String TAB_SPEC_MECH_LIGHT = "light";
     private final String TAB_SPEC_MECH_MEDIUM = "medium";
     private final String TAB_SPEC_MECH_HEAVY = "heavy";
+    private float mPrevXPos;
+    private int mTabPosition;
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -70,8 +74,46 @@ public class MechGuideFragment extends BaseFragment implements AsyncTaskUpdate, 
         createFragmentTabs(v);
     }
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        final float xPosOffset = 50;
+
+        if (event.getX() > xPosOffset) { //Prevent the nav drawer from registering the event
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                mPrevXPos = event.getX();
+                return true;
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (mPrevXPos < event.getX()) { //Right swipe
+                    Logger.debug(this,"Right");
+                    mTabHost.setCurrentTab(1);
+                    switchTab("Right");
+                } else { //Left swipe
+                    Logger.debug(this,"Left");
+                    switchTab("Left");
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void switchTab(String direction) {
+
+        if (direction.equals("Right")) {
+            if (mTabPosition < mTabHost.getTabWidget().getChildCount() - 1)
+            mTabPosition++;
+        } else if (direction.equals("Left")) {
+            if (mTabPosition > 0)
+            mTabPosition--;
+        }
+        Logger.debug(this, "Current Tab: " + mTabPosition);
+        mTabHost.setCurrentTab(mTabPosition);
+    }
+
     private void createFragmentTabs(View v) {
         mTabHost = (FragmentTabHost) v.findViewById(R.id.tabhost);
+        mTabHost.setOnTouchListener(this);
+
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.tabFrameLayout);
         mTabHost.addTab(
                 mTabHost.newTabSpec(TAB_SPEC_MECH_LIGHT).setIndicator(getString(R.string.mech_tab_light),
@@ -101,6 +143,7 @@ public class MechGuideFragment extends BaseFragment implements AsyncTaskUpdate, 
         super.onDestroyView();
         mTabHost = null;
     }
+
 
     @Override
     public void onTabChanged(String id) {
