@@ -45,13 +45,15 @@ public class MechGuideFragment extends BaseFragment implements AsyncTaskUpdate, 
     private final String TAB_SPEC_MECH_LIGHT = "light";
     private final String TAB_SPEC_MECH_MEDIUM = "medium";
     private final String TAB_SPEC_MECH_HEAVY = "heavy";
-    private float mPrevXPos;
-    private int mTabPosition;
+    private static final float DP_X_SWIPE_EVENT_OFFSET = 50;
+    private float mPrevXdp;
+    private float mSwipeXPxOffset;
 
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setOnFragmentInflated(this);
+        mSwipeXPxOffset = dpToPx(DP_X_SWIPE_EVENT_OFFSET);
     }
 
     @Override
@@ -76,38 +78,32 @@ public class MechGuideFragment extends BaseFragment implements AsyncTaskUpdate, 
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        final float xPosOffset = 50;
+        final float xPos = event.getX();
 
-        if (event.getX() > xPosOffset) { //Prevent the nav drawer from registering the event
+        if (xPos > mSwipeXPxOffset) { //Prevent the nav drawer from registering the event
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                mPrevXPos = event.getX();
-                return true;
+                mPrevXdp = xPos;
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                if (mPrevXPos < event.getX()) { //Right swipe
-                    Logger.debug(this,"Right");
-                    mTabHost.setCurrentTab(1);
+                if (mPrevXdp < xPos) { //Right swipe
                     switchTab("Right");
                 } else { //Left swipe
-                    Logger.debug(this,"Left");
                     switchTab("Left");
                 }
-                return true;
             }
+            return true;
         }
         return false;
     }
 
     private void switchTab(String direction) {
+        final int curTab = mTabHost.getCurrentTab();
+        final int tabCount = mTabHost.getTabWidget().getChildCount();
 
-        if (direction.equals("Right")) {
-            if (mTabPosition < mTabHost.getTabWidget().getChildCount() - 1)
-            mTabPosition++;
-        } else if (direction.equals("Left")) {
-            if (mTabPosition > 0)
-            mTabPosition--;
+        if (direction.equals("Right") && curTab + 1 < tabCount) {
+            mTabHost.setCurrentTab(curTab + 1);
+        } else if (direction.equals("Left") && curTab - 1 >= 0) {
+            mTabHost.setCurrentTab(curTab - 1);
         }
-        Logger.debug(this, "Current Tab: " + mTabPosition);
-        mTabHost.setCurrentTab(mTabPosition);
     }
 
     private void createFragmentTabs(View v) {
