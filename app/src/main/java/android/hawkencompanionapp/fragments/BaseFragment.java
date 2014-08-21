@@ -61,7 +61,7 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment {
 
     protected float dpToPx(float dp) {
         float screenDp = getResources().getDisplayMetrics().density;
-        return (int)(dp * (screenDp));
+        return (dp * screenDp);
     }
 
     protected void setOnFragmentInflated(OnFragmentInflated onFragmentInflated) {

@@ -45,7 +45,7 @@ public class MechGuideFragment extends BaseFragment implements AsyncTaskUpdate, 
     private final String TAB_SPEC_MECH_LIGHT = "light";
     private final String TAB_SPEC_MECH_MEDIUM = "medium";
     private final String TAB_SPEC_MECH_HEAVY = "heavy";
-    private static final float DP_X_SWIPE_EVENT_OFFSET = 50;
+    private static final float DP_X_SWIPE_EVENT_OFFSET = 20;
     private float mPrevXdp;
     private float mSwipeXPxOffset;
 
