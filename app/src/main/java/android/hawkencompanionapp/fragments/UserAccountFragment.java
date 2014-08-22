@@ -1,3 +1,22 @@
+/*
+ * Copyright (c) 2014 "Hawken Companion App"
+ *
+ * This file is part of Hawken Companion App.
+ *
+ * Hawken Companion App is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses.
+ */
+
 package android.hawkencompanionapp.fragments;
 
 import android.hawkencompanionapp.R;
@@ -5,11 +24,9 @@ import android.hawkencompanionapp.activities.LoginActivity;
 import android.hawkencompanionapp.activities.UserAccountMainActivity;
 import android.hawkencompanionapp.asynctasks.AsyncTaskUpdate;
 import android.hawkencompanionapp.asynctasks.LoadUserDetailsTask;
-import android.hawkencompanionapp.logger.Logger;
 import android.hawkencompanionapp.models.UserLoginSession;
 import android.hawkencompanionapp.models.UserProfile;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 /**
@@ -32,9 +49,10 @@ public class UserAccountFragment extends BaseFragment implements AsyncTaskUpdate
 
     private void loadUserDetails() {
         final UserLoginSession mUserLoginSession = getArguments().getParcelable(LoginActivity.BUNDLE_KEY);
-        Logger.debug(this,mUserLoginSession.getPhpAccessId());
+//        Logger.debug(this, mUserLoginSession.getPhpAccessId());
         mUserProfile = new UserProfile();
-        new LoadUserDetailsTask(this,mUserProfile).execute(mUserLoginSession);
+        new LoadUserDetailsTask(this, mUserProfile).execute(mUserLoginSession);
+
     }
 
     @Override

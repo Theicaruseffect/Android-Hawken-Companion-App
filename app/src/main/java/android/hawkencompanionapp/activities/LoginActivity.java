@@ -1,28 +1,28 @@
-package android.hawkencompanionapp.activities;
-/**
- *   Copyright (c) 2014 "Hawken Companion App"
+/*
+ * Copyright (c) 2014 "Hawken Companion App"
  *
- *   This file is part of Hawken Companion App.
+ * This file is part of Hawken Companion App.
  *
- *   Hawken Companion App is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
+ * Hawken Companion App is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * at your option) any later version.
  *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses.
  */
+
+package android.hawkencompanionapp.activities;
 
 import android.content.Intent;
 import android.hawkencompanionapp.R;
 import android.hawkencompanionapp.asynctasks.AsyncTaskUpdate;
 import android.hawkencompanionapp.asynctasks.LoginUserTask;
-import android.hawkencompanionapp.logger.Logger;
 import android.hawkencompanionapp.models.UserLoginSession;
 import android.os.Bundle;
 import android.view.View;
@@ -53,12 +53,13 @@ public class LoginActivity extends BaseActivity implements AsyncTaskUpdate {
         final String password = editTextPassword.getText().toString();
 
         mUserLoginSession = new UserLoginSession(emailAddress,password);
-        new LoginUserTask(this).execute(mUserLoginSession);
 
         if (loginDetailsAreCorrectlyFormatted(emailAddress, password)) {
-            displayUIToast("User Valid");
+            new LoginUserTask(this).execute(mUserLoginSession);
+            displayUIToast("Online mode activated.");
         } else {
-            displayUIToast("User Invalid");
+            displayUIToast("Offline mode activated.");
+            //startUserAccountActivity();
         }
     }
 
@@ -89,13 +90,17 @@ public class LoginActivity extends BaseActivity implements AsyncTaskUpdate {
         return true;
     }
 
+    private void startUserAccountActivity() {
+        final Intent intent = new Intent(this, UserAccountMainActivity.class);
+        //Logger.debug(this, mUserLoginSession.getEmailAddress());
+        intent.putExtra(BUNDLE_KEY, mUserLoginSession);
+        startActivity(intent);
+    }
+
     @Override
     public void onAsyncPostComplete() {
         if (mUserLoginSession.isUserValid()) {
-            final Intent intent = new Intent(this, UserAccountMainActivity.class);
-            Logger.debug(this, mUserLoginSession.getEmailAddress());
-            intent.putExtra(BUNDLE_KEY, mUserLoginSession);
-            startActivity(intent);
+            startUserAccountActivity();
         } else {
             displayUIToast(getString(R.string.login_details_invalid));
         }

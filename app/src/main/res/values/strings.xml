@@ -69,6 +69,7 @@
     <!--Action Bar Content-->
     <string name="action_about">About</string>
     <string name="action_logout">Logout</string>
+    <string name="action_offline_mode">Offline mode</string>
 
     <!--Welcome Fragment Title-->
     <string name="welcome_fragment_title">Welcome</string>
