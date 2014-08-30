@@ -1,25 +1,29 @@
-package android.hawkencompanionapp.activities;
-/**
- *   Copyright (c) 2014 "Hawken Companion App"
+/*
+ * Copyright (c) 2014 "Hawken Companion App"
  *
- *   This file is part of Hawken Companion App.
+ * This file is part of Hawken Companion App.
  *
- *   Hawken Companion App is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
+ * Hawken Companion App is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * at your option) any later version.
  *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses.
  */
+
+package android.hawkencompanionapp.activities;
 import android.hawkencompanionapp.R;
 import android.hawkencompanionapp.adapters.NavBarExpandableListAdapter;
-import android.hawkencompanionapp.fragments.*;
+import android.hawkencompanionapp.fragments.BaseFragment;
+import android.hawkencompanionapp.fragments.MechGuideFragment;
+import android.hawkencompanionapp.fragments.UserAccountFragment;
+import android.hawkencompanionapp.fragments.WelcomeUserFragment;
 import android.hawkencompanionapp.models.NavBarCategory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,6 +34,7 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,8 +58,13 @@ public class UserAccountMainActivity extends BaseActivity implements OnChildClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUserAccountBundle = getIntent().getExtras();
+        mUserAccountBundle = getIntent().getExtras(); //This is null if the user is in offline mode
         mNavBarCategoryList = getCategoriesWithItems();
+
+        if (mUserAccountBundle == null) { //User is in offline mode
+            super.disableSignOutMenuItem();
+        }
+
         displayWelcomeFragment();
         populateNavBarFragmentMap();
         setupNavDrawer();
@@ -73,6 +83,7 @@ public class UserAccountMainActivity extends BaseActivity implements OnChildClic
 
         for (int j = 0; j < mNavBarCategoryList.size(); j++) {
             final NavBarCategory category = mNavBarCategoryList.get(j);
+
             final int len = category.getCategoryItemList().size();
 
             for (int k = 0; k < len; k++) {
@@ -142,9 +153,17 @@ public class UserAccountMainActivity extends BaseActivity implements OnChildClic
         if (selectedFragment == null) {
             displayUIToast("Need to implement");
         } else if (selectedFragment instanceof UserAccountFragment) {
-            //Only pass the account details to fragments that actually need it
-            mUserAccountBundle.putString(FRAGMENT_TITLE_BUNDLE_KEY, navItemStr);
-            swapCurrentFragment(selectedFragment, mUserAccountBundle);
+
+            if (mUserAccountBundle == null) { //User hasn't logged in
+                displayUIToast("Please login");
+                finish();
+            } else {
+                //Only pass the account details to fragments that actually need it
+                mUserAccountBundle.putString(FRAGMENT_TITLE_BUNDLE_KEY, navItemStr);
+                swapCurrentFragment(selectedFragment, mUserAccountBundle);
+            }
+
+
         } else {
             final Bundle b = new Bundle();
             b.putString(FRAGMENT_TITLE_BUNDLE_KEY,navItemStr);

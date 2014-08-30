@@ -93,6 +93,8 @@ public class LoginActivity extends BaseActivity implements AsyncTaskUpdate {
     private void startUserAccountActivity() {
         final Intent intent = new Intent(this, UserAccountMainActivity.class);
         //Logger.debug(this, mUserLoginSession.getEmailAddress());
+
+
         intent.putExtra(BUNDLE_KEY, mUserLoginSession);
         startActivity(intent);
     }

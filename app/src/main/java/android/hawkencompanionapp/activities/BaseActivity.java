@@ -39,6 +39,7 @@ import android.widget.Toast;
 public abstract class BaseActivity extends FragmentActivity {
 
     private ProgressDialog mProgressDialog;
+    private boolean mDisableSignOutOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +94,10 @@ public abstract class BaseActivity extends FragmentActivity {
             menuItemOfflineMode.setVisible(false);
         }
 
+        if (mDisableSignOutOption) { //If the user is in offline mode
+            menuItemSignOut.setVisible(false);
+        }
+
         return true;
     }
 
@@ -112,10 +117,12 @@ public abstract class BaseActivity extends FragmentActivity {
                 actionHandled = true;
             break;
             case R.id.action_offline_mode:
-                //Handle user signing out
+                //Offline mode activated
+                Intent i = new Intent(this, UserAccountMainActivity.class);
+                startActivity(i);
                 displayUIToast("Enabling offline mode.");
                 actionHandled = true;
-                break;
+            break;
         }
 
         if (actionHandled) {
@@ -128,6 +135,10 @@ public abstract class BaseActivity extends FragmentActivity {
     private void startAboutActivity() {
         final Intent i = new Intent(this,AboutActivity.class);
         startActivity(i);
+    }
+
+    protected void disableSignOutMenuItem() {
+        mDisableSignOutOption = true;
     }
 
     /**
